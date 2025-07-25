@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Chronicles - Challenge {{ challenge_number }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <style>
+        .CodeMirror {
+            height: 400px;
+            font-size: 16px;
+        }
+        .sidebar {
+            min-width: 220px;
+            max-width: 250px;
+        }
+        .active-challenge {
+            background-color: #2563eb;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex h-screen">
+        <!-- Left Sidebar for Challenges -->
+        <div class="sidebar bg-gray-800 p-4 overflow-y-auto">
+            <h2 class="text-lg font-bold mb-4">Challenges</h2>
+            <ul>
+                {% for ch in all_challenges %}
+                <li class="mb-2">
+                    <a href="{{ url_for('challenge', stage=ch.id) }}"
+                       class="block px-2 py-1 rounded hover:bg-blue-500 {% if ch.id == challenge_number %}active-challenge{% endif %}">
+                       {{ ch.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Unlocked Keywords -->
+            <h2 class="text-lg font-bold mt-6 mb-2">Unlocked Keywords</h2>
+            {% if unlocked_keywords %}
+                <ul class="text-sm text-green-300">
+                    {% for keyword in unlocked_keywords %}
+                    <li>• {{ keyword }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-400 text-sm">No keywords yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Main Code Editor Area -->
+        <div class="flex-1 p-6 overflow-y-auto">
+            <h1 class="text-3xl font-bold mb-4">{{ current_challenge.title }}</h1>
+            <p class="mb-4 text-gray-300">Debug and fix the following code:</p>
+
+            <form method="POST" onsubmit="editor.save()">
+                <textarea id="codeEditor" name="code">{{ challenge_code }}</textarea>
+                <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Run & Check</button>
+            </form>
+
+            {% if error %}
+            <p class="text-red-400 mt-4 whitespace-pre-line">{{ error }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "default"
+        });
+    </script>
+</body>
+</html>

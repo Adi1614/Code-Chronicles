@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success - Code Chronicles</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-10 max-w-2xl text-center">
+        <h1 class="text-3xl font-bold mb-4">✅ Correct!</h1>
+        <p class="mb-2">Story Keyword for this challenge:</p>
+        <div class="bg-green-700 text-white text-xl font-semibold p-4 rounded inline-block mb-4">
+            {{ story_keyword }}
+        </div>
+        <form action="{{ url_for('challenge', stage=next_challenge) }}" method="get">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded text-white font-bold">
+                Next Challenge
+            </button>
+        </form>
+    </div>
+</body>
+</html>

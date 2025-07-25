@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Congratulations - Code Chronicles</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-10 text-center">
+        <h1 class="text-4xl font-bold text-green-500 mb-6">🎉 Congratulations!</h1>
+        <p class="text-xl mb-6">You've completed all 15 challenges and assembled the full story.</p>
+        <p class="text-lg text-yellow-400">Your story keywords:</p>
+        <div class="bg-gray-800 p-4 rounded mt-4 max-w-xl mx-auto">
+            {% for keyword in all_keywords %}
+                <span class="inline-block bg-gray-700 text-white p-2 m-1 rounded">{{ keyword }}</span>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('reset') }}" class="block mt-6 text-blue-400 underline">Start Over</a>
+    </div>
+</body>
+</html>

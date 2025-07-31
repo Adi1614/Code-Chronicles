@@ -96,6 +96,15 @@ def login():
                     "completed": [],
                     "keywords": []
                 })
+                session['stage'] = 1
+                session['unlocked_keywords'] = []
+            else:
+                # Load progress from DB
+                completed = team_data.get("completed", [])
+                max_stage = max(completed, default=0) + 1
+                session['stage'] = min(max_stage, len(challenges))  # Don't go beyond last stage
+                session['unlocked_keywords'] = team_data.get("keywords", [])
+
 
             return redirect(url_for('home'))
     return render_template('login.html')
